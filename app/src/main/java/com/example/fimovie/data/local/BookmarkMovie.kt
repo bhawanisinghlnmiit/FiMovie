@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class BookmarkItem(
+data class BookmarkMovie(
     @PrimaryKey val imdbId : Int,
     @ColumnInfo(name = "poster")val Poster: String,
     @ColumnInfo(name = "title")val Title: String,

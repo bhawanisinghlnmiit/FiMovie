@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.rememberNavController
 import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.movies.MovieScreen
 import com.example.fimovie.ui.theme.BackgroundColor
@@ -20,7 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             SystemUiScreen()
             FiMovieTheme {
-                MovieScreen(movieViewModel)
+                val navController = rememberNavController()
+                MovieScreen(movieViewModel, navController)
             }
         }
     }

@@ -9,9 +9,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.fimovie.data.local.BookmarkMovie
 import com.example.fimovie.data.local.movies
 import com.example.fimovie.domain.MoviePaging
 import com.example.fimovie.domain.MovieRepository
+import com.example.fimovie.domain.use_case.MoviesUseCases
 import com.example.fimovie.model.FilterState
 import com.example.fimovie.model.SearchWidgetState
 import com.example.fimovie.model.dto.Search
@@ -21,12 +23,48 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
-import java.util.logging.Filter
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository) :
+class MovieViewModel @Inject constructor(private val moviesUseCases: MoviesUseCases, private val movieRepository: MovieRepository) :
     ViewModel() {
+
+    private val _state : MutableState<List<Search>> = mutableStateOf(emptyList())
+    val state : State<List<Search>> = _state
+
+    private var recentlyDeletedMovie : Search? = null
+
+    fun onEvent(event: MovieEvent){
+        when(event) {
+            is MovieEvent.InsertMovie -> {
+                viewModelScope.launch {
+                    moviesUseCases.insertMovieInBookmarkUseCase(movie = event.movie)
+                }
+            }
+            is MovieEvent.RestoreMovie -> {
+                viewModelScope.launch {
+                    moviesUseCases
+                        .insertMovieInBookmarkUseCase(
+                            recentlyDeletedMovie ?: return@launch
+                        )
+                    recentlyDeletedMovie = null
+                }
+
+            }
+            is MovieEvent.DeleteMovie -> {
+                viewModelScope.launch {
+                    moviesUseCases.deleteBookmarkMovieUseCase(movie = event.movie)
+                    recentlyDeletedMovie = event.movie
+                }
+            }
+            is MovieEvent.GetAllBookmarkMovies -> {
+                viewModelScope.launch {
+                    moviesUseCases.getBookmarkMoviesUseCase()
+                }
+            }
+        }
+    }
 
     fun getMovie(s: String = _searchTextState.value, type : FilterState = _filterState.value): Flow<PagingData<Search>> =
         Pager(PagingConfig(pageSize = 10)) {

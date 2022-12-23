@@ -1,28 +1,22 @@
 package com.example.fimovie.ui.movies
 
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.fimovie.model.SearchWidgetState
 import com.example.fimovie.model.dto.Search
-import com.example.fimovie.presentation.MovieFilter
 import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.appbar.MainAppBar
 import com.example.fimovie.ui.appbar.TitleBar
@@ -30,7 +24,7 @@ import com.example.fimovie.ui.filter_options.FilterMovies
 import com.example.fimovie.ui.progressbar.CircularProgressBar
 
 @Composable
-fun MovieList(viewModel: MovieViewModel) {
+fun MovieListScreen(viewModel: MovieViewModel) {
     val searchTextState by viewModel.searchTextState
     val searchWidgetState by viewModel.searchWidgetState
     val filterState by viewModel.filterState
@@ -43,7 +37,6 @@ fun MovieList(viewModel: MovieViewModel) {
     ) {
 
         TitleBar()
-
         MainAppBar(
             searchWIdgetState = searchWidgetState,
             searchTextState = searchTextState,

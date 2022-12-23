@@ -1,4 +1,4 @@
-package com.example.fimovie.ui.movies
+package com.example.fimovie.ui.bookmark_movies
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
@@ -9,8 +9,11 @@ import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.theme.BackgroundColor
 
 @Composable
-fun MovieScreen(movieViewModel: MovieViewModel,navController: NavController) {
+fun BookmarkMovieScreen(
+    navController: NavController,
+    viewModel: MovieViewModel
+){
     Surface(modifier = Modifier.fillMaxSize(), color = BackgroundColor) {
-        MovieListScreen(viewModel = movieViewModel)
+        BookmarkMovieList(viewModel = viewModel)
     }
 }

@@ -24,7 +24,7 @@ fun FilterMovies(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         filterList.forEach { s  ->
             FilterItem(
