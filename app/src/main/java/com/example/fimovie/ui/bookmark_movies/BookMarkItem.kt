@@ -1,29 +1,37 @@
 package com.example.fimovie.ui.bookmark_movies
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.fimovie.data.local.BookmarkMovie
 import com.example.fimovie.model.dto.Search
+import com.example.fimovie.ui.theme.IconColor
 import com.example.fimovie.ui.theme.LightBlack
 import com.example.fimovie.ui.theme.SubtitleColor
 
 @Composable
 fun BookMarkItem(
     movie: Search,
-    onDeleteClick: ()-> Unit
+    onDeleteClick: (Search)-> Unit
 ){
 
     Column(
@@ -33,10 +41,10 @@ fun BookMarkItem(
             elevation = 10.dp,
             shape = RoundedCornerShape(10.dp)
         ) {
-            Column(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                    .fillMaxSize()
+                    .shadow(elevation = 10.dp, shape = RoundedCornerShape(10.dp))
             ) {
                 AsyncImage(
                     modifier = Modifier
@@ -56,6 +64,18 @@ fun BookMarkItem(
                     model = movie?.Poster,
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
+                )
+                Icon(
+                    painter = painterResource(id = com.example.fimovie.R.drawable.ic_delete_icon),
+                    contentDescription = "bookmark",
+                    tint = IconColor,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(40.dp)
+                        .padding(8.dp)
+                        .clickable {
+                            onDeleteClick(movie)
+                        }
                 )
             }
         }

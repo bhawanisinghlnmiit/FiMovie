@@ -18,13 +18,7 @@ import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fimovie.model.FilterState
-import com.example.fimovie.presentation.MovieFilter
-import com.example.fimovie.ui.theme.BackgroundColor
-import com.example.fimovie.ui.theme.SearchBarColor
-import com.example.fimovie.ui.theme.SelectedFilterColor
-import com.example.fimovie.ui.theme.SubtitleColor
-import java.util.Locale
-import java.util.logging.Filter
+import com.example.fimovie.ui.theme.*
 
 
 @Composable
@@ -47,11 +41,11 @@ fun FilterItem(
             )
         )
     }
-    val borderWidth = 2.dp
+    val borderWidth = 1.dp
 
     Box(
         modifier = Modifier
-            .border(BorderStroke(borderWidth, rainbowColorsBrush), RoundedCornerShape(2.dp))
+            .border(if(filterValue == selectedFilterState) BorderStroke(borderWidth, rainbowColorsBrush) else BorderStroke(borderWidth, IconColor), RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))
             .clickable {
                 onFilterClicked(filterValue)

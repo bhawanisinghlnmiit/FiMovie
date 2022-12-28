@@ -9,8 +9,8 @@ import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.theme.BackgroundColor
 
 @Composable
-fun MovieScreen(movieViewModel: MovieViewModel,navController: NavController) {
+fun MovieScreen(navController: NavController, movieViewModel: MovieViewModel) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackgroundColor) {
-        MovieListScreen(viewModel = movieViewModel)
+        MovieListScreen(viewModel = movieViewModel, navController = navController)
     }
 }

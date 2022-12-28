@@ -11,22 +11,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.fimovie.model.FilterState
-import com.example.fimovie.presentation.MovieFilter
 import com.example.fimovie.ui.theme.SearchBarColor
 
 @Composable
 fun FilterMovies(
-    filterState : FilterState,
-    onFilterClicked : (FilterState) -> Unit
-){
-
+    filterState: FilterState,
+    onFilterClicked: (FilterState) -> Unit
+) {
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        filterList.forEach { s  ->
+        filterList.forEach { s ->
             FilterItem(
                 filterValue = s,
                 selectedFilterState = filterState,
@@ -36,9 +34,6 @@ fun FilterMovies(
     }
 }
 
-val filterList  = listOf(
-    FilterState.HOME,
-    FilterState.MOVIES,
-    FilterState.SERIES,
-    FilterState.EPISODES
+val filterList = listOf(
+    FilterState.HOME, FilterState.MOVIES, FilterState.SERIES, FilterState.EPISODES
 )

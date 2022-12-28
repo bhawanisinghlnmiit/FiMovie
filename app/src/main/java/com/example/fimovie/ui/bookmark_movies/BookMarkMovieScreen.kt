@@ -10,7 +10,6 @@ import com.example.fimovie.ui.theme.BackgroundColor
 
 @Composable
 fun BookmarkMovieScreen(
-    navController: NavController,
     viewModel: MovieViewModel
 ){
     Surface(modifier = Modifier.fillMaxSize(), color = BackgroundColor) {

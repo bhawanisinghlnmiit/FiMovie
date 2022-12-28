@@ -1,30 +1,36 @@
 package com.example.fimovie.ui.movies
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.fimovie.R
 import com.example.fimovie.model.SearchWidgetState
 import com.example.fimovie.model.dto.Search
 import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.appbar.MainAppBar
 import com.example.fimovie.ui.appbar.TitleBar
 import com.example.fimovie.ui.filter_options.FilterMovies
+import com.example.fimovie.ui.navigation.Screen
 import com.example.fimovie.ui.progressbar.CircularProgressBar
+import com.example.fimovie.ui.theme.IconColor
 
 @Composable
-fun MovieListScreen(viewModel: MovieViewModel) {
+fun MovieListScreen(viewModel: MovieViewModel, navController: NavController) {
     val searchTextState by viewModel.searchTextState
     val searchWidgetState by viewModel.searchWidgetState
     val filterState by viewModel.filterState
@@ -36,7 +42,10 @@ fun MovieListScreen(viewModel: MovieViewModel) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        TitleBar()
+        TitleBar(
+            imageIcon = R.drawable.ic_bookmark,
+            onBookMarkClicked = { navController.navigate(Screen.BookmarkScreen.route) }
+        )
         MainAppBar(
             searchWIdgetState = searchWidgetState,
             searchTextState = searchTextState,
@@ -67,10 +76,13 @@ fun MovieListScreen(viewModel: MovieViewModel) {
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        LazyVerticalGrid( columns = GridCells.Fixed(3)) {
+        LazyVerticalGrid(columns = GridCells.Fixed(3)) {
             items(movies.itemCount) { index ->
                 movies[index]?.let { movie ->
-                    MovieItem(movie = movie)
+                    MovieItem(
+                        movie = movie,
+                        onBookmarkClick = { viewModel.insertBookmarkItem(movie) }
+                    )
                 }
             }
             when (movies.loadState.append) {
@@ -86,6 +98,11 @@ fun MovieListScreen(viewModel: MovieViewModel) {
         when {
             hasProgress in Int.MIN_VALUE..0 && searchWidgetState == SearchWidgetState.CLOSED -> {
                 CircularProgressBar()
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Beam me up Scottie!",
+                    color = IconColor
+                )
             }
         }
     }

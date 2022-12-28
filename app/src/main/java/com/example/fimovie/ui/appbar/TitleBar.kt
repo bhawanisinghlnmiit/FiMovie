@@ -2,11 +2,8 @@ package com.example.fimovie.ui.appbar
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -25,14 +22,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.fimovie.R
+import com.example.fimovie.ui.navigation.Screen
 import com.example.fimovie.ui.theme.IconColor
 import java.time.format.TextStyle
 
 @OptIn(ExperimentalTextApi::class)
-@Preview
 @Composable
-fun TitleBar() {
+fun TitleBar(
+    imageIcon : Int,
+    onBookMarkClicked : () -> Unit = {}
+) {
     val rainbowColorsBrush = remember {
         listOf(
             Color(0xFF9575CD),
@@ -68,8 +69,12 @@ fun TitleBar() {
             )
         )
         Icon(
-            modifier = Modifier.align(Alignment.CenterEnd),
-            painter = painterResource(id = R.drawable.ic_bookmark),
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clickable(onClick = onBookMarkClicked)
+                .size(24.dp)
+            ,
+            painter = painterResource(id = imageIcon),
             contentDescription = "",
             tint = IconColor
         )

@@ -19,10 +19,7 @@ import com.example.fimovie.model.SearchWidgetState
 import com.example.fimovie.model.dto.Search
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +27,9 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(private val moviesUseCases: MoviesUseCases, private val movieRepository: MovieRepository) :
     ViewModel() {
 
+    init {
+        getBookmarkMovies()
+    }
     private val _state : MutableState<List<Search>> = mutableStateOf(emptyList())
     val state : State<List<Search>> = _state
 
@@ -100,13 +100,27 @@ class MovieViewModel @Inject constructor(private val moviesUseCases: MoviesUseCa
         _searchTextState.value = newValue
     }
 
-}
+    fun insertBookmarkItem(movie : Search){
+        viewModelScope.launch {
+            movieRepository.insertMovie(movie)
+        }
+    }
 
-data class MovieFilter(
-    val isSelected : Boolean,
-    val movieName : FilterState
-)
+    fun deleteBookmarkItem(movie : Search){
+        viewModelScope.launch {
+            movieRepository.deleteMovie(movie)
+        }
+    }
 
-sealed class UiEvent{
-    object FilterSelected : UiEvent()
+    private val _bookmarkMovies : MutableStateFlow<List<Search>> = MutableStateFlow(emptyList())
+    val bookmarkMovies : StateFlow<List<Search>> = _bookmarkMovies
+
+    private fun getBookmarkMovies(){
+        viewModelScope.launch {
+            movieRepository.getBookmarkMovies().collect{
+                _bookmarkMovies.value = it
+            }
+        }
+    }
+
 }

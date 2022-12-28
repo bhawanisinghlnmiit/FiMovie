@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.example.fimovie.presentation.MovieViewModel
 import com.example.fimovie.ui.movies.MovieScreen
+import com.example.fimovie.ui.navigation.MainNavigation
 import com.example.fimovie.ui.theme.BackgroundColor
 import com.example.fimovie.ui.theme.FiMovieTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -21,8 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SystemUiScreen()
             FiMovieTheme {
-                val navController = rememberNavController()
-                MovieScreen(movieViewModel, navController)
+                MainNavigation(movieViewModel)
             }
         }
     }
