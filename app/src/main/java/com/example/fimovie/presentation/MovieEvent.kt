@@ -8,4 +8,5 @@ sealed class MovieEvent {
     object RestoreMovie: MovieEvent()
     data class InsertMovie(val movie : Search) : MovieEvent()
     object GetAllBookmarkMovies : MovieEvent()
+//    data class GetMovie(val imdbId : String) : MovieEvent()
 }

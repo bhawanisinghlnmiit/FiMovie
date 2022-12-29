@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.sql.RowId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,6 +64,11 @@ class MovieViewModel @Inject constructor(private val moviesUseCases: MoviesUseCa
                     moviesUseCases.getBookmarkMoviesUseCase()
                 }
             }
+//            is MovieEvent.GetMovie -> {
+//                viewModelScope.launch {
+//                    moviesUseCases.getMovieByImdb(event.imdbId)
+//                }
+//            }
         }
     }
 
@@ -122,5 +128,16 @@ class MovieViewModel @Inject constructor(private val moviesUseCases: MoviesUseCa
             }
         }
     }
+
+//    private val _bookmarkMovie : MutableState<List<Search>> = mutableStateOf(emptyList())
+//    val bookmarkMovie : State<List<Search>> = _bookmarkMovie
+//
+//    fun getMovieByImdbId(imdbId: String) {
+//        viewModelScope.launch {
+//            movieRepository.getMovie(imdbId).collect{
+//                _bookmarkMovie.value = it
+//            }
+//        }
+//    }
 
 }

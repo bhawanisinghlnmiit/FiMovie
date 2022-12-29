@@ -20,4 +20,7 @@ interface MovieDao {
     @Delete
     suspend fun deleteMovie(bookmarkMovie: Search)
 
+    @Query("Select * FROM search where imdbId = :imdbId")
+    fun getMovie(imdbId : String) : Flow<List<Search>>
+
 }

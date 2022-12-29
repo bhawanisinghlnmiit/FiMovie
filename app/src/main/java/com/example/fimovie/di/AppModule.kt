@@ -13,10 +13,7 @@ import com.example.fimovie.data.local.MovieDatabase
 import com.example.fimovie.data.remote.MovieApiService
 import com.example.fimovie.data.repository.MovieRepositoryImpl
 import com.example.fimovie.domain.MovieRepository
-import com.example.fimovie.domain.use_case.DeleteBookmarkMovieUseCase
-import com.example.fimovie.domain.use_case.GetBookmarkMoviesUseCase
-import com.example.fimovie.domain.use_case.InsertMovieInBookmarkUseCase
-import com.example.fimovie.domain.use_case.MoviesUseCases
+import com.example.fimovie.domain.use_case.*
 import com.example.fimovie.utils.Constants
 import com.example.fimovie.utils.Constants.MOVIE_DATABASE
 import dagger.Binds
@@ -90,7 +87,8 @@ object AppModule {
         return MoviesUseCases(
             DeleteBookmarkMovieUseCase(repository),
             GetBookmarkMoviesUseCase(repository),
-            InsertMovieInBookmarkUseCase(repository)
+            InsertMovieInBookmarkUseCase(repository),
+            GetMovieUseCase(repository)
         )
     }
 

@@ -11,7 +11,9 @@ import com.example.fimovie.ui.theme.IconColor
 import com.example.fimovie.ui.theme.SubtitleColor
 
 @Composable
-fun CircularProgressBar() {
+fun CircularProgressBar(
+    showText : Boolean
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -21,5 +23,11 @@ fun CircularProgressBar() {
             modifier = Modifier.size(50.dp),
             color = IconColor
         )
+        if(showText){
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Beam me up Scottie!", color = IconColor
+            )
+        }
     }
 }

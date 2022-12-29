@@ -12,5 +12,6 @@ interface MovieRepository {
     fun getBookmarkMovies() : Flow<List<Search>>
     suspend fun insertMovie(movie: Search)
     suspend fun deleteMovie(movie: Search)
+    fun getMovie(imdbId : String) : Flow<List<Search>>
 
 }

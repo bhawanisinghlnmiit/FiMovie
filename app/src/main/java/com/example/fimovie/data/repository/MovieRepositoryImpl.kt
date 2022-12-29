@@ -32,4 +32,9 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun deleteMovie(movie: Search) {
         dao.deleteMovie(movie)
     }
+
+    override fun getMovie(imdbId: String): Flow<List<Search>> {
+        return dao.getMovie(imdbId)
+    }
+
 }
